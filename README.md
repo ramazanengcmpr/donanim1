@@ -13,6 +13,7 @@ Week 1:
 
 Research and planning:
 Research existing simulation libraries and tools (e.g., Matplotlib, Plotly, Three.js).
+I will use the python programming language to develop the simulation.
 Plan the simulation module's architecture and design.
 Define the simulation's input and output parameters.
 Simulation core development:
