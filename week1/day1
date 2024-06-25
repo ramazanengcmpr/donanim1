@@ -1,0 +1,142 @@
+Day 1-2: Research and Planning
+
+Research existing simulation libraries and tools:
+Study the documentation and examples of popular simulation libraries such as Matplotlib, Plotly, and Three.js.
+Evaluate the pros and cons of each library for the CNFR33D simulation module.
+Plan the simulation module's architecture and design:
+Define the overall architecture of the simulation module.
+Identify the key components and their interactions.
+Create a high-level design document outlining the simulation module's structure and functionality.
+Define the simulation's input and output parameters:
+Identify the input parameters required for the simulation (e.g., tool diameter, feed rate, material properties).
+Define the output parameters of the simulation (e.g., milling time, material removal, tool path).
+Day 3-4: Simulation Core Development
+
+Develop the core simulation algorithm:
+Implement the basic simulation algorithm using Python.
+Focus on visualizing the milling process and predicting the outcome.
+Use NumPy and SciPy libraries for numerical computations.
+Implement basic simulation features:
+Tool movement: Implement the movement of the tool along the tool path.
+Material removal: Implement the removal of material as the tool moves along the tool path.
+Basic visualization: Implement a basic visualization of the milling process using Matplotlib or Plotly.
+Matplotlib
+
+What: Matplotlib is a popular Python plotting library for creating 2D and 3D plots.
+Why: Matplotlib is a great choice for scientific computing and data visualization.
+Create a simple plot.
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Data for plotting
+t = np.arange(0.0, 2.0, 0.01)
+s = 1 + np.sin(2 * np.pi * t)
+
+fig, ax = plt.subplots()
+ax.plot(t, s)
+
+ax.set(xlabel='time (s)', ylabel='voltage (mV)',
+       title='About as simple as it gets, folks')
+ax.grid()
+
+fig.savefig("test.png")
+plt.show()
+Plotly
+
+What: Plotly is an interactive visualization library for Python, R, and MATLAB.
+Why: Plotly is great for creating interactive, web-based visualizations.
+Examples:
+2D plots: Line plots, Scatter plots
+import plotly.express as px
+
+df = px.data.gapminder().query("country=='Canada'")
+fig = px.line(df, x="year", y="lifeExp", title='Life expectancy in Canada')
+fig.show()
+
+3D plots: Surface plots, Mesh plots
+Resources:
+Plotly documentation
+Plotly tutorials
+Simulation Module Architecture
+
+The simulation module will consist of the following key components:
+
+Input Parser: Responsible for parsing and validating user input parameters.
+Simulation Engine: The core component that performs the simulation calculations.
+Material Model: A component that provides material properties and behavior.
+Tool Model: A component that provides tool properties and behavior.
+Geometry Engine: A component that handles geometric calculations and transformations.
+Output Generator: Responsible for generating output parameters and visualizations.
+Component Interactions
+
+The components will interact as follows:
+
+The Input Parser receives user input and passes it to the Simulation Engine.
+The Simulation Engine uses the Material Model and Tool Model to perform simulation calculations.
+The Simulation Engine uses the Geometry Engine to perform geometric calculations and transformations.
+The Simulation Engine passes the simulation results to the Output Generator.
+The Output Generator generates output parameters and visualizations.
+Simulation Module Functionality
+
+The simulation module will provide the following functionality:
+
+Simulation: Performs a 3D simulation of the milling process.
+Material Removal Calculation: Calculates the material removal rate and volume.
+Tool Path Generation: Generates a 3D tool path for the milling process.
+Milling Time Estimation: Estimates the milling time required for the process.
+Visualization: Generates 3D visualizations of the simulation results.
+Input Parameters
+
+The simulation module will require the following input parameters:
+
+Tool Diameter: The diameter of the milling tool.
+Feed Rate: The feed rate of the milling tool.
+Material Properties: The material properties, such as density, hardness, and thermal conductivity.
+Workpiece Geometry: The 3D geometry of the workpiece.
+Milling Parameters: The milling parameters, such as the spindle speed and depth of cut.
+ 
+Output Parameters
+
+The simulation module will generate the following output parameters:
+
+Milling Time: The estimated milling time required for the process.
+Material Removal: The calculated material removal rate and volume.
+Tool Path: The generated 3D tool path for the milling process.
+Visualization: 3D visualizations of the simulation results, including the workpiece and tool path.
+This design document outlines the overall architecture and functionality of the simulation module.
+The input and output parameters are defined, and the component interactions are described. This will provide a solid foundation for implementing the simulation module using Matplotlib
+
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
