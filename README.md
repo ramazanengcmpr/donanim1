@@ -1,7 +1,7 @@
 # donanim1
 
 
-roject Definition: Develop a simulation module for CNFR33D, a free, open-source 3D milling software, to visualize the milling process and predict the outcome.
+project Definition: Develop a simulation module for CNFR33D, a free, open-source 3D milling software, to visualize the milling process and predict the outcome.
 
 Goals:
 
