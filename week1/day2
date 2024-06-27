@@ -1,1 +1,113 @@
+Detailed Design Document: Simulation Module's Architecture and Design
+
+Introduction
+
+The CNFR33D simulation module is designed to simulate the milling process of a 3D object. The module will take into account various parameters such as tool diameter, feed rate, and material properties to provide an accurate simulation of the milling process.
+Architecture
+
+The simulation module will consist of the following components:
+
+Input Parser: Responsible for parsing and validating user input parameters.
+Simulation Engine: The core component that performs the simulation calculations.
+Material Model: A component that provides material properties and behavior.
+Tool Model: A component that provides tool properties and behavior.
+Geometry Engine: A component that handles geometric calculations and transformations.
+Output Generator: Responsible for generating output parameters and visualizations.
+Component Interactions
+
+The following diagram shows the interactions between the key components:
+                                      +---------------+
+                                      |  Input Parser  |
+                                      +---------------+
+                                             |
+                                             |
+                                             v
+                                      +---------------+
+                                      |  Simulation Engine  |
+                                      +---------------+
+                                             |
+                                             |
+                                             v
+                                      +---------------+       +---------------+
+                                      |  Material Model  |       |  Tool Model  |
+                                      +---------------+       +---------------+
+                                             |                       |
+                                             |                       |
+                                             v                       v
+                                      +---------------+
+                                      |  Geometry Engine  |
+                                      +---------------+
+                                             |
+                                             |
+                                             v
+                                      +---------------+
+                                      |  Output Generator  |
+                                      +---------------+
+
+
+
+Input and Output Parameters
+
+The simulation module will accept the following input parameters:
+
+Tool diameter
+Feed rate
+Material properties (e.g., density, Young's modulus)
+3D object geometry
+The simulation module will generate the following output parameters:
+
+Milling time
+Material removal
+Tool path
+Visualizations of the milling process
+
+
+Assumptions and Dependencies
+
+The simulation module assumes that the input parameters are valid and accurate. The module depends on the Material Model and Tool Model components to provide accurate material and tool properties.
+
+Future Development
+
+The simulation module will be developed using a modular approach, allowing for easy integration of new components and features. Future development will focus on improving the accuracy and efficiency of the simulation engine, as well as adding new features such as multi-tool support and advanced material models.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
