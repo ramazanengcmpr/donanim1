@@ -1,1 +1,49 @@
+Daday 3-4: Simulation Core Development
 
+Develop the Core Simulation Algorithm
+
+Implement the basic simulation algorithm using Python. Focus on visualizing the milling process and predicting the outcome. Use NumPy and SciPy libraries for numerical computations.
+
+Implement Basic Simulation Features
+
+Tool Movement: Implement the movement of the tool along the tool path.
+Material Removal: Implement the removal of material as the tool moves along the tool path.
+Basic Visualization: Implement a basic visualization of the milling process using Matplotlib or Plotly.
+///python
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define the tool path
+tool_path = np.array([[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0], [0, 0, 0]])
+
+# Define the material properties
+material_density = 1000  # kg/m^3
+material_hardness = 50  # HV
+
+# Define the tool properties
+tool_diameter = 10  # mm
+tool_feed_rate = 100  # mm/min
+
+# Initialize the simulation
+workpiece_geometry = np.array([[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0], [0, 0, 0]])
+material_removed = np.zeros_like(workpiece_geometry)
+
+# Simulate the milling process
+for i in range(len(tool_path) - 1):
+    # Calculate the tool movement
+    tool_movement = tool_path[i + 1] - tool_path[i]
+    
+    # Calculate the material removal
+    material_removed += material_density * tool_feed_rate * tool_diameter * tool_movement
+    
+    # Update the workpiece geometry
+    workpiece_geometry -= material_removed
+
+# Visualize the simulation results
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.plot3D(workpiece_geometry[:, 0], workpiece_geometry[:, 1], workpiece_geometry[:, 2], 'b-')
+ax.set_xlabel('X (mm)')
+ax.set_ylabel('Y (mm)')
+ax.set_zlabel('Z (mm)')
+plt.show()///
