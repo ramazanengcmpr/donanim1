@@ -106,12 +106,13 @@ Day 4: Integrate Simulation Module with GUI
 
 Integrate the simulation module with the GUI
 Develop a user interface to input simulation parameters and display the simulation results
-import sys
+python
+///import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLineEdit, QFormLayout
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-python
-///class SimulationGUI(QMainWindow):
+
+class SimulationGUI(QMainWindow):
     def __init__(self):
         super().__init__()
 
