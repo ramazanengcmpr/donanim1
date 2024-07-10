@@ -1,1 +1,136 @@
+Day 1: Task 1.1 - Create a GUI Framework
 
+Choose a GUI framework (e.g., PyQt, wxPython, etc.)
+Create a new GUI project using the chosen framework
+Set up the basic GUI layout (e.g., windows, menus, etc.)
+python
+///import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow
+
+class SimulationGUI(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.initUI()
+
+    def initUI(self):
+        self.setWindowTitle("Milling Simulation")
+        self.setGeometry(100, 100, 800, 600)
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    gui = SimulationGUI()
+    gui.show()
+    sys.exit(app.exec_())///
+Day 2: Task 1.2 - Create Input Fields for Simulation Parameters
+
+Create input fields for simulation parameters, such as:
+Tool diameter
+Feed rate
+Material properties
+Workpiece geometry
+Milling parameters
+Use GUI widgets (e.g., QLineEdit, QComboBox, etc.) to create the input fields
+python
+///import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLineEdit, QFormLayout
+
+class SimulationGUI(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.initUI()
+
+    def initUI(self):
+        self.setWindowTitle("Milling Simulation")
+        self.setGeometry(100, 100, 800, 600)
+
+        self.input_layout = QFormLayout()
+        self.tool_diameter_input = QLineEdit()
+        self.feed_rate_input = QLineEdit()
+        self.material_properties_input = QLineEdit()
+        # ...
+
+        self.input_layout.addRow("Tool Diameter:", self.tool_diameter_input)
+        self.input_layout.addRow("Feed Rate:", self.feed_rate_input)
+        self.input_layout.addRow("Material Properties:", self.material_properties_input)
+        # ...
+
+        self.central_widget = QWidget()
+        self.central_widget.setLayout(self.input_layout)
+        self.setCentralWidget(self.central_widget)
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    gui = SimulationGUI()
+    gui.show()
+    sys.exit(app.exec_())///
+Day 3: Task 1.3 - Create a 3D Visualization Widget
+
+Use a 3D visualization library (e.g., Matplotlib, Plotly, etc.) to create a 3D visualization widget
+Integrate the 3D visualization widget into the GUI
+import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+python
+///class SimulationGUI(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.initUI()
+
+    def initUI(self):
+        self.setWindowTitle("Milling Simulation")
+        self.setGeometry(100, 100, 800, 600)
+
+        self.visualization_widget = QWidget()
+        self.visualization_layout = QVBoxLayout()
+        self.visualization_widget.setLayout(self.visualization_layout)
+
+        self.visualization_figure = plt.figure()
+        self.visualization_ax = self.visualization_figure.add_subplot(111, projection='3d')
+        self.visualization_canvas = FigureCanvas(self.visualization_figure)
+        self.visualization_layout.addWidget(self.visualization_canvas)
+
+        self.central_widget = QWidget()
+        self.central_widget.setLayout(self.input_layout)
+        self.setCentralWidget(self.central_widget)
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    gui = SimulationGUI()
+    gui.show()
+    sys.exit(app.exec_())///
+Day 4: Integrate Simulation Module with GUI
+
+Integrate the simulation module with the GUI
+Develop a user interface to input simulation parameters and display the simulation results
+import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLineEdit, QFormLayout
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+python
+///class SimulationGUI(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.initUI()
+
+    def initUI(self):
+        self.setWindowTitle("Milling Simulation")
+        self.setGeometry(100, 100, 800, 600)
+
+        self.input_layout = QFormLayout()
+        self.tool_diameter_input = QLineEdit()
+        self.feed_rate_input = QLineEdit()
+        self.material_properties_input = QLineEdit()
+        # ...
+
+        self.input_layout.addRow("Tool Diameter:", self.tool_diameter_input)
+        self.input_layout.addRow("Feed Rate:", self.feed_rate_input)
+        self.input_layout.addRow("Material Properties:", self.material_properties_input)
+        # ...
+
+        self.run_simulation_button = QPushButton("
+///
