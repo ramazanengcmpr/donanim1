@@ -176,3 +176,84 @@ if __name__ == "__main__":
     gui.show()
     sys.exit(app.exec_())///
 
+ Code Update
+Removed duplicate imports
+
+I removed the duplicate imports of QApplication, QMainWindow, QWidget, QLineEdit, QFormLayout, Axes3D, and FigureCanvasQTAgg from the top of the code. These imports were repeated multiple times, which is unnecessary and can lead to errors.
+
+Consolidated the SimulationGUI class
+
+I consolidated the SimulationGUI class into a single definition. You had multiple definitions of the same class, which is not allowed in Python. I merged the code from each definition into a single class.
+
+Removed unnecessary code
+
+I removed the unnecessary code that was repeated multiple times, such as the if __name__ == "__main__": block and the app = QApplication(sys.argv) line. This code is only needed once, at the end of the script.
+
+Reorganized the code
+
+I reorganized the code to make it more readable and maintainable. I grouped related code together, such as the input layout, visualization widget, and central widget.
+python
+///import sys  # Import the sys module, which provides access to system-specific parameters and functions
+
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QLineEdit, QFormLayout, QVBoxLayout, QPushButton  # Import necessary classes from PyQt5
+
+from mpl_toolkits.mplot3d import Axes3D  # Import the Axes3D class from mpl_toolkits.mplot3d for 3D plotting
+
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas  # Import the FigureCanvasQTAgg class from matplotlib.backends.backend_qt5agg for rendering matplotlib figures in PyQt5
+
+import matplotlib.pyplot as plt  # Import the matplotlib.pyplot module for plotting
+
+class SimulationGUI(QMainWindow):  # Define a class SimulationGUI that inherits from QMainWindow
+    def __init__(self):  # Define the constructor method
+        super().__init__()  # Call the constructor of the parent class (QMainWindow)
+
+        # Initialize the GUI
+        self.initUI()  # Call the initUI method to set up the GUI
+
+    def initUI(self):  # Define the initUI method
+        # Set the window title and geometry
+        self.setWindowTitle("Milling Simulation")  # Set the window title to "Milling Simulation"
+        self.setGeometry(100, 100, 800, 600)  # Set the window geometry to 800x600 pixels with top-left corner at (100, 100)
+
+        # Create the input layout
+        self.input_layout = QFormLayout()  # Create a QFormLayout instance for the input fields
+        self.tool_diameter_input = QLineEdit()  # Create a QLineEdit instance for the tool diameter input field
+        self.feed_rate_input = QLineEdit()  # Create a QLineEdit instance for the feed rate input field
+        self.material_properties_input = QLineEdit()  # Create a QLineEdit instance for the material properties input field
+        # ...
+
+        # Add input fields to the layout
+        self.input_layout.addRow("Tool Diameter:", self.tool_diameter_input)  # Add the tool diameter input field to the layout
+        self.input_layout.addRow("Feed Rate:", self.feed_rate_input)  # Add the feed rate input field to the layout
+        self.input_layout.addRow("Material Properties:", self.material_properties_input)  # Add the material properties input field to the layout
+        # ...
+
+        # Create the run simulation button
+        self.run_simulation_button = QPushButton("Run Simulation")  # Create a QPushButton instance with the text "Run Simulation"
+
+        # Create the visualization widget
+        self.visualization_widget = QWidget()  # Create a QWidget instance for the visualization widget
+        self.visualization_layout = QVBoxLayout()  # Create a QVBoxLayout instance for the visualization layout
+        self.visualization_widget.setLayout(self.visualization_layout)  # Set the layout of the visualization widget
+
+        # Create the 3D visualization figure
+        self.visualization_figure = plt.figure()  # Create a matplotlib figure instance
+        self.visualization_ax = self.visualization_figure.add_subplot(111, projection='3d')  # Create a 3D axes instance
+        self.visualization_canvas = FigureCanvas(self.visualization_figure)  # Create a FigureCanvas instance to render the figure in PyQt5
+        self.visualization_layout.addWidget(self.visualization_canvas)  # Add the canvas to the visualization layout
+
+        # Create the central widget and layout
+        self.central_widget = QWidget()  # Create a QWidget instance for the central widget
+        self.central_layout = QVBoxLayout()  # Create a QVBoxLayout instance for the central layout
+        self.central_layout.addLayout(self.input_layout)  # Add the input layout to the central layout
+        self.central_layout.addWidget(self.run_simulation_button)  # Add the run simulation button to the central layout
+        self.central_layout.addWidget(self.visualization_widget)  # Add the visualization widget to the central layout
+        self.central_widget.setLayout(self.central_layout)  # Set the layout of the central widget
+        self.setCentralWidget(self.central_widget)  # Set the central widget of the main window
+
+if __name__ == "__main__":  # Check if this script is being run directly (not being imported as a module)
+    # Create the application
+    app = QApplication(sys.argv)  # Create a QApplication instance with the command-line arguments
+    gui = SimulationGUI()  # Create an instance of the SimulationGUI class
+    gui.show()  # Show the GUI
+    sys.exit(app.exec_())  # Start the application's event loop and exit when it finishes///
