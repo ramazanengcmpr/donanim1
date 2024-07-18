@@ -1,0 +1,191 @@
+#final code
+import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QLineEdit, QFormLayout, QVBoxLayout, QPushButton
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+import matplotlib.pyplot as plt
+
+class MillingSimulation:
+    def __init__(self, workpiece, tool, milling_params):
+        self.workpiece = workpiece
+        self.tool = tool
+        self.milling_params = milling_params
+        self.grid_size = 0.1  # Grid size for material removal simulation
+
+        
+
+    def generate_tool_path(self):
+        # Generate tool path using linear interpolation
+        tool_path = []
+        for i in range(len(self.workpiece.vertices) - 1):
+            tool_path.append(self.workpiece.vertices[i])
+            tool_path.append(self.workpiece.vertices[i + 1])
+        return tool_path
+
+    def simulate_material_removal(self, tool_path):
+        # Initialize 3D grid for material removal simulation
+        grid = np.zeros((int(self.workpiece.dimensions[0] / self.grid_size),
+                         int(self.workpiece.dimensions[1] / self.grid_size),
+                         int(self.workpiece.dimensions[2] / self.grid_size)))
+
+        # Iterate through tool path and simulate material removal
+        for point in tool_path:
+            # Calculate material removal volume based on tool geometry and milling params
+            removal_volume = self.calculate_removal_volume(point)
+            # Update grid by removing material
+            self.update_grid(grid, point, removal_volume)
+
+        return grid
+
+    def calculate_removal_volume(self, point):
+        # Calculate material removal volume based on tool geometry and milling params
+        # This is a simplified example, you may need to use a more complex model
+        removal_volume = self.tool.diameter ** 2 * self.milling_params.feed_rate
+        return removal_volume
+
+    def update_grid(self, grid, point, removal_volume):
+        # Update grid by removing material
+        x, y, z = point
+        grid[int(x / self.grid_size), int(y / self.grid_size), int(z / self.grid_size)] -= removal_volume
+
+
+
+class SimulationGUI(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        # Initialize the GUI
+        self.initUI()
+
+    def initUI(self):
+        #... (rest of the GUI initialization code)
+
+        # Create the simulation input and output parameters
+
+        self.simulation_input_params = {
+
+            'tool_diameter': 10.0,  # mm
+            'feed_rate': 100.0,  # mm/min
+            'aterial_properties': {
+                'density': 7850.0,  # kg/m^3
+                'youngs_modulus': 200e9,  # Pa
+                'poisson_ratio': 0.3
+            }
+        }
+        self.simulation_output_params = {
+            'aterial_removed': 0.0,  # mm^3
+            'tool_path': []  # list of 3D points
+        }
+
+        # Create the material removal and tool movement algorithms
+        self.material_removal_algorithm = MaterialRemovalAlgorithm()
+        self.tool_movement_algorithm = ToolMovementAlgorithm()
+
+        # Create the run simulation button
+        self.run_simulation_button = QPushButton("Run Simulation")
+        self.run_simulation_button.clicked.connect(self.run_simulation)
+        self.input_layout = QFormLayout()
+        self.tool_diameter_input = QLineEdit()
+        self.feed_rate_input = QLineEdit()
+        self.material_properties_input = QLineEdit()
+        # Create the visualization widget
+        self.visualization_widget = QWidget()
+        self.visualization_layout = QVBoxLayout()
+        self.visualization_widget.setLayout(self.visualization_layout)
+
+        # Create the 3D visualization figure
+        self.visualization_figure = plt.figure()
+        self.visualization_ax = self.visualization_figure.add_subplot(111, projection='3d')
+        self.visualization_canvas = FigureCanvas(self.visualization_figure)
+        self.visualization_layout.addWidget(self.visualization_canvas)
+        self.input_layout.addRow("Tool Diameter:", self.tool_diameter_input)
+        self.input_layout.addRow("Feed Rate:", self.feed_rate_input)
+        self.input_layout.addRow("Material Properties:", self.material_properties_input)
+
+        # Create the central widget and layout
+        self.central_widget = QWidget()
+        self.central_layout = QVBoxLayout()
+        self.central_layout.addLayout(self.input_layout)
+        self.central_layout.addWidget(self.run_simulation_button)
+        self.central_layout.addWidget(self.visualization_widget)
+        self.central_widget.setLayout(self.central_layout)
+        self.setCentralWidget(self.central_widget)
+
+    def run_simulation(self):
+        # Get the simulation input parameters from the GUI
+        tool_diameter = float(self.tool_diameter_input.text())
+        feed_rate = float(self.feed_rate_input.text())
+        material_properties = {
+            'density': float(self.material_properties_input.text()),
+            'youngs_modulus': float(self.material_properties_input.text()),
+            'poisson_ratio': float(self.material_properties_input.text())
+        }
+
+        # Set the simulation input parameters
+        self.simulation_input_params['tool_diameter'] = tool_diameter
+        self.simulation_input_params['feed_rate'] = feed_rate
+        self.simulation_input_params['material_properties'] = material_properties
+
+        # Run the material removal and tool movement algorithms
+        self.material_removal_algorithm.run(self.simulation_input_params)
+        self.tool_movement_algorithm.run(self.simulation_input_params)
+
+        # Get the simulation output parameters
+        material_removed = self.material_removal_algorithm.get_material_removed()
+        tool_path = self.tool_movement_algorithm.get_tool_path()
+
+        # Set the simulation output parameters
+        self.simulation_output_params['material_removed'] = material_removed
+        self.simulation_output_params['tool_path'] = tool_path
+
+        # Update the GUI with the simulation results
+        self.visualization_ax.clear()
+        self.visualization_ax.plot3D(tool_path[:, 0], tool_path[:, 1], tool_path[:, 2])
+        self.visualization_canvas.draw()
+        self.visualization_layout.addWidget(self.visualization_canvas)
+class MaterialRemovalAlgorithm:
+    def __init__(self):
+        pass
+
+    def run(self, simulation_input_params):
+        # Implement the material removal algorithm here
+        #...
+        pass
+
+    def get_material_removed(self):
+        # Return the amount of material removed
+        return 10.0  # mm^3
+
+class ToolMovementAlgorithm:
+    def __init__(self):
+        pass
+
+    def run(self, simulation_input_params):
+        # Implement the tool movement algorithm here
+        #...
+        pass
+
+    def get_tool_path(self):
+        # Return the tool path as a list of 3D points
+        return np.array([[0, 0, 0], [10, 0, 0], [10, 10, 0], [0, 10, 0], [0, 0, 0]])
+
+class Workpiece:
+    def __init__(self):
+        self.vertices = []  # List of 3D vertices that define the workpiece shape
+        self.dimensions = [10, 10, 10]  # Dimensions of the workpiece (x, y, z)
+        self.material = Material()  # Material properties of the workpiece
+
+# class Material:
+#     def __init__(self):
+#         self.density = 7850.0  # kg/m^3
+#         self.youngs_modulus = 200e9
+#         # Visualize the simulation results
+#         self.visualization_ax.clear()
+#         self.visualization_ax.voxels(grid, edgecolor='k')
+#         self.visualization_canvas.draw()
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    gui = SimulationGUI()
+    gui.show()
+    sys.exit(app.exec_())
